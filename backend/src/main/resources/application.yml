@@ -6,6 +6,10 @@ spring:
     ansi:
       enabled: always
 
+  sql:
+    init:
+      mode: always
+
   jpa:
     defer-datasource-initialization: true
     open-in-view: false
