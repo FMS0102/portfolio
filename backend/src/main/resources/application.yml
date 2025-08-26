@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: backend
+
+  output:
+    ansi:
+      enabled: always
+
