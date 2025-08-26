@@ -6,3 +6,18 @@ spring:
     ansi:
       enabled: always
 
+  jpa:
+    defer-datasource-initialization: true
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+    hibernate:
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+      ddl-auto: create
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/${DB_NAME}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
