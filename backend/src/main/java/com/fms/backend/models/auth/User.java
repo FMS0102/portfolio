@@ -1,6 +1,8 @@
 package com.fms.backend.models.auth;
 
+import com.fms.backend.dto.auth.LoginRequestDTO;
 import jakarta.persistence.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -80,5 +82,9 @@ public class User implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(getId(), getName(), getEmail(), getPassword(), getRoles());
+    }
+
+    public boolean isLoginCorrect(LoginRequestDTO loginRequestDTO, PasswordEncoder passwordEncoder) {
+        return passwordEncoder.matches(loginRequestDTO.password(), this.password);
     }
 }
