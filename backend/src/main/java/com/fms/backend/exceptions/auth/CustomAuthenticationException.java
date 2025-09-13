@@ -1,6 +1,7 @@
 package com.fms.backend.exceptions.auth;
 
 public class CustomAuthenticationException extends RuntimeException {
+
     private final boolean isGeneric;
 
     public CustomAuthenticationException() {
@@ -11,5 +12,9 @@ public class CustomAuthenticationException extends RuntimeException {
     public CustomAuthenticationException(String message) {
         super(message);
         this.isGeneric = false;
+    }
+
+    public boolean isGeneric() {
+        return isGeneric;
     }
 }
