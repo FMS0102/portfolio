@@ -1,6 +1,6 @@
 package com.fms.backend.dto;
 
-import com.fms.backend.models.auth.Role;
+import com.fms.backend.models.Role;
 
 import java.io.Serializable;
 import java.util.Objects;

@@ -1,4 +1,4 @@
-package com.fms.backend.controllers.auth;
+package com.fms.backend.controllers;
 
 import com.fms.backend.dto.auth.LoginRequestDTO;
 import com.fms.backend.dto.auth.LoginResponseDTO;

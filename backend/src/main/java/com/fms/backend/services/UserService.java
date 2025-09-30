@@ -2,7 +2,7 @@ package com.fms.backend.services;
 
 import com.fms.backend.dto.UserDTO;
 import com.fms.backend.mappers.UserMapper;
-import com.fms.backend.repositories.auth.UserRepository;
+import com.fms.backend.repositories.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

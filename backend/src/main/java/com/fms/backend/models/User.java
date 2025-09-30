@@ -1,4 +1,4 @@
-package com.fms.backend.models.auth;
+package com.fms.backend.models;
 
 import com.fms.backend.dto.auth.LoginRequestDTO;
 import jakarta.persistence.*;

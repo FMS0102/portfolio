@@ -1,6 +1,6 @@
-package com.fms.backend.repositories.auth;
+package com.fms.backend.repositories;
 
-import com.fms.backend.models.auth.User;
+import com.fms.backend.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

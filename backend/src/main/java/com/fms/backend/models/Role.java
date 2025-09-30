@@ -1,4 +1,4 @@
-package com.fms.backend.models.auth;
+package com.fms.backend.models;
 
 import jakarta.persistence.*;
 

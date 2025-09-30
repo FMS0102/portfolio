@@ -1,6 +1,6 @@
-package com.fms.backend.repositories.auth;
+package com.fms.backend.repositories;
 
-import com.fms.backend.models.auth.Role;
+import com.fms.backend.models.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface RoleRepository extends JpaRepository<Role, Long> {

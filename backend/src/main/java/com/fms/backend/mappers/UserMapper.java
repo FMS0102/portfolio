@@ -1,7 +1,7 @@
 package com.fms.backend.mappers;
 
 import com.fms.backend.dto.UserDTO;
-import com.fms.backend.models.auth.User;
+import com.fms.backend.models.User;
 import org.mapstruct.Mapper;
 
 import java.util.List;

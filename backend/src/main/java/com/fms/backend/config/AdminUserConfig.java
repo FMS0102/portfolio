@@ -1,9 +1,9 @@
 package com.fms.backend.config;
 
-import com.fms.backend.models.auth.Role;
-import com.fms.backend.models.auth.User;
-import com.fms.backend.repositories.auth.RoleRepository;
-import com.fms.backend.repositories.auth.UserRepository;
+import com.fms.backend.models.Role;
+import com.fms.backend.models.User;
+import com.fms.backend.repositories.RoleRepository;
+import com.fms.backend.repositories.UserRepository;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
