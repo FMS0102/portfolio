@@ -34,18 +34,19 @@ public class AuthService {
 
         logger.info("LoginService: login.");
 
-        var userOptional = userRepository.findByEmail(loginRequest.email());
+        var user = userRepository.findByEmail(loginRequest.email())
+                .orElseThrow(() -> new CustomAuthenticationException("Invalid email or password."));
 
-        if (userOptional.isEmpty() || !userOptional.get().isLoginCorrect(loginRequest, passwordEncoder)) {
+        if (!user.isLoginCorrect(loginRequest, passwordEncoder)) {
             throw new CustomAuthenticationException("Invalid email or password.");
         }
 
-        var scopes = userOptional.get().getRoles()
+        var scopes = user.getRoles()
                 .stream()
                 .map(Role::getName)
                 .collect(Collectors.joining(" "));
 
-        var accessToken = tokenGeneratorService.generateAccessToken(userOptional.get().getId(), userOptional.get().getEmail(), scopes);
+        var accessToken = tokenGeneratorService.generateAccessToken(user.getId(), user.getEmail(), scopes);
 
         return ResponseEntity.ok(new LoginResponseDTO(
                 accessToken.accessToken(),
