@@ -4,6 +4,8 @@ jwt:
     token-expiration-minutes: ${ACCESS_TOKEN_EXPIRATION_MINUTES}
   private:
     key: ${JWT_PRIVATE_KEY_PATH}
+  refresh:
+    token-expiration-minutes: ${REFRESH_TOKEN_EXPIRATION_MINUTES}
 
 spring:
   application:
