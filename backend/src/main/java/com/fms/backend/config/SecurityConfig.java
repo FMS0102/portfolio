@@ -1,5 +1,7 @@
 package com.fms.backend.config;
 
+import com.fms.backend.exceptions.filter.CustomAccessDeniedHandler;
+import com.fms.backend.exceptions.filter.CustomAuthenticationEntryPoint;
 import com.fms.backend.exceptions.filter.JwtExceptionFilter;
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKSet;
@@ -35,11 +37,19 @@ import static com.fms.backend.utils.KeyUtils.getPublicKeyFromString;
 @EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
+    private final CustomAuthenticationEntryPoint authenticationEntryPoint;
+    private final CustomAccessDeniedHandler accessDeniedHandler;
+
     @Value("${jwt.private.key}")
     private String privateKeyPath;
 
     @Value("${jwt.public.key}")
     private String publicKeyPath;
+
+    public SecurityConfig(CustomAuthenticationEntryPoint authenticationEntryPoint, CustomAccessDeniedHandler accessDeniedHandler) {
+        this.authenticationEntryPoint = authenticationEntryPoint;
+        this.accessDeniedHandler = accessDeniedHandler;
+    }
 
     @Bean
     public RSAPublicKey publicKey() throws Exception {
@@ -61,6 +71,10 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .anyRequest().authenticated()
+                )
+                .exceptionHandling(e -> e
+                        .authenticationEntryPoint(authenticationEntryPoint)
+                        .accessDeniedHandler(accessDeniedHandler)
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2
                         .jwt(Customizer.withDefaults())

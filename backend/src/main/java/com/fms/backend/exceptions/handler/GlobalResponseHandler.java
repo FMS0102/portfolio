@@ -1,6 +1,7 @@
 package com.fms.backend.exceptions.handler;
 
 import com.fms.backend.exceptions.ExceptionResponse;
+import com.fms.backend.exceptions.auth.CustomAccessDeniedException;
 import com.fms.backend.exceptions.auth.CustomAuthenticationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,5 +27,14 @@ public class GlobalResponseHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
     }
 
+    @ExceptionHandler(CustomAccessDeniedException.class)
+    public ResponseEntity<ExceptionResponse> handleAccessDeniedExceptionSecurity(CustomAccessDeniedException ex, WebRequest request) {
+        ExceptionResponse response = new ExceptionResponse(
+                new Date(),
+                ex.getMessage(),
+                request.getDescription(false)
+        );
+        return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+    }
 
 }
