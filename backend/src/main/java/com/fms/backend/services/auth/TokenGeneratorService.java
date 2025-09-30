@@ -7,8 +7,10 @@ import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.stereotype.Service;
 
+import java.security.SecureRandom;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.Base64;
 import java.util.UUID;
 
 @Service
@@ -39,6 +41,16 @@ public class TokenGeneratorService {
                 jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue(),
                 jwtEncoder.encode(JwtEncoderParameters.from(claims)).getExpiresAt()
         );
+    }
+
+    public String generateRefreshToken() {
+        return UUID.randomUUID() + "-" + randomExtraRefreshToken();
+    }
+
+    private static String randomExtraRefreshToken() {
+        byte[] bytes = new byte[16];
+        new SecureRandom().nextBytes(bytes);
+        return Base64.getUrlEncoder().withoutPadding().encodeToString(bytes);
     }
 
 }
