@@ -1,8 +1,12 @@
 package com.fms.backend.controllers;
 
+import com.fms.backend.dto.auth.AuthServiceResponseDTO;
 import com.fms.backend.dto.auth.LoginRequestDTO;
 import com.fms.backend.dto.auth.LoginResponseDTO;
 import com.fms.backend.services.auth.AuthService;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,7 +24,24 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponseDTO> login(@RequestBody LoginRequestDTO loginRequestDTO) {
-        return authService.login(loginRequestDTO);
+    public ResponseEntity<LoginResponseDTO> login(
+            @RequestBody LoginRequestDTO loginRequestDTO,
+            HttpServletResponse response
+    ) {
+        AuthServiceResponseDTO authResponse = authService.login(loginRequestDTO);
+        ResponseCookie cookie = ResponseCookie.from("refresh_token", authResponse.refreshToken())
+                .httpOnly(true)
+                .secure(true)
+                .path("/auth")
+                .maxAge(authResponse.refreshTokenExpiresIn().getEpochSecond())
+                .sameSite("Strict")
+                .build();
+
+        response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
+
+        return ResponseEntity.ok(new LoginResponseDTO(
+                authResponse.accessToken(),
+                authResponse.accessTokenExpiresIn()
+        ));
     }
 }

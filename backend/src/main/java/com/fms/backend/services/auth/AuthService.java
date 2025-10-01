@@ -1,5 +1,6 @@
 package com.fms.backend.services.auth;
 
+import com.fms.backend.dto.auth.AuthServiceResponseDTO;
 import com.fms.backend.dto.auth.LoginRequestDTO;
 import com.fms.backend.dto.auth.LoginResponseDTO;
 import com.fms.backend.dto.auth.TokenRefreshResponseDTO;
@@ -34,7 +35,7 @@ public class AuthService {
     private final Logger logger = LoggerFactory.getLogger(AuthService.class.getName());
 
     @Transactional
-    public ResponseEntity<LoginResponseDTO> login(LoginRequestDTO loginRequest) {
+    public AuthServiceResponseDTO login(LoginRequestDTO loginRequest) {
 
         logger.info("LoginService: login.");
 
@@ -53,16 +54,15 @@ public class AuthService {
         var accessToken = tokenGeneratorService.generateAccessToken(user.getId(), user.getEmail(), scopes);
         var refreshToken = refreshTokenService.createRefreshToken(user.getId());
 
-        return ResponseEntity.ok(new LoginResponseDTO(
+        return new AuthServiceResponseDTO(
                 accessToken.accessToken(),
                 accessToken.expirationDate(),
                 refreshToken.refreshToken(),
-                refreshToken.expirationDate())
-        );
+                refreshToken.expirationDate());
     }
 
     @Transactional
-    public ResponseEntity<LoginResponseDTO> updateRefreshToken(TokenRefreshResponseDTO refreshTokenResponse) {
+    public AuthServiceResponseDTO updateRefreshToken(TokenRefreshResponseDTO refreshTokenResponse) {
 
         logger.info("LoginService: update refresh token.");
 
@@ -78,11 +78,11 @@ public class AuthService {
 
         var accessToken = tokenGeneratorService.generateAccessToken(user.getId(), user.getEmail(), scopes);
 
-        return ResponseEntity.ok(new LoginResponseDTO(
+        return new AuthServiceResponseDTO(
                 accessToken.accessToken(),
                 accessToken.expirationDate(),
                 newRefreshToken.refreshToken(),
-                newRefreshToken.expirationDate())
+                newRefreshToken.expirationDate()
         );
     }
 }
