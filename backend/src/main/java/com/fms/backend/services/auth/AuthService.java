@@ -62,11 +62,11 @@ public class AuthService {
     }
 
     @Transactional
-    public AuthServiceResponseDTO updateRefreshToken(TokenRefreshResponseDTO refreshTokenResponse) {
+    public AuthServiceResponseDTO updateRefreshToken(String refreshTokenResponse) {
 
         logger.info("LoginService: update refresh token.");
 
-        var newRefreshToken = refreshTokenService.revokeAndReplace(refreshTokenResponse.refreshToken(), refreshTokenResponse.expirationDate());
+        var newRefreshToken = refreshTokenService.revokeAndReplace(refreshTokenResponse);
         var user = newRefreshToken.user().orElseThrow(
                 () -> new TokenRefreshException("User not found for this token.")
         );

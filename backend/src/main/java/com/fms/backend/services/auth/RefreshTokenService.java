@@ -68,11 +68,7 @@ public class RefreshTokenService {
     }
 
     @Transactional
-    public TokenRefreshRequestDTO revokeAndReplace(String compositeToken, Instant expirationDate) {
-
-        if(expirationDate.isBefore(Instant.now())){
-            throw new TokenRefreshException("Expired refresh token.");
-        }
+    public TokenRefreshRequestDTO revokeAndReplace(String compositeToken) {
 
         String[] parts = compositeToken.split("\\.");
         if (parts.length != 2) {
@@ -85,6 +81,11 @@ public class RefreshTokenService {
         var refreshTokenDb = refreshTokenRepository.findByToken(tokenId).orElseThrow(
                 () -> new TokenRefreshException("Refresh token not found or invalid.")
         );
+
+        if (refreshTokenDb.getExpiryDate().isBefore(Instant.now())) {
+            refreshTokenRepository.delete(refreshTokenDb);
+            throw new TokenRefreshException("Expired refresh token.");
+        }
 
         var user = refreshTokenDb.getUser();
 
