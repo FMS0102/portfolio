@@ -101,11 +101,11 @@ public class RefreshToken implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof RefreshToken that)) return false;
-        return Objects.equals(getId(), that.getId()) && Objects.equals(getToken(), that.getToken()) && Objects.equals(getUser(), that.getUser()) && Objects.equals(getExpiryDate(), that.getExpiryDate()) && Objects.equals(getTokenHash(), that.getTokenHash()) && Objects.equals(getUserAgent(), that.getUserAgent()) && Objects.equals(getIp(), that.getIp());
+        return Objects.equals(getId(), that.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getToken(), getUser(), getExpiryDate(), getTokenHash(), getUserAgent(), getIp());
+        return Objects.hashCode(getId());
     }
 }

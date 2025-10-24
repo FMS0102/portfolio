@@ -71,12 +71,12 @@ public class UserDTO implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof UserDTO userDto)) return false;
-        return Objects.equals(getId(), userDto.getId()) && Objects.equals(getName(), userDto.getName()) && Objects.equals(getEmail(), userDto.getEmail()) && Objects.equals(getPassword(), userDto.getPassword()) && Objects.equals(getRoles(), userDto.getRoles());
+        if (!(o instanceof UserDTO userDTO)) return false;
+        return Objects.equals(getId(), userDTO.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getName(), getEmail(), getPassword(), getRoles());
+        return Objects.hashCode(getId());
     }
 }
