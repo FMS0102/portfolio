@@ -1,11 +1,10 @@
+import Hero from "./sections/Hero"
 
 const App = () => {
   return (
-    <main>
-        <div>
-            <h1>Configuração Inicial</h1>
-        </div>
-    </main>
+    <>
+        <Hero />
+    </>
   )
 }
 
